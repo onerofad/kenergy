@@ -32,8 +32,12 @@ const Sales = () => {
     const [modalText1, setmodalText1] = useState("")
     const [show1, setShow1] = useState(false)
     const handleClose1 = () => {
-        printContent()
+        //printContent()
         setShow1(false)
+        setItem("")
+        setPrice("")
+        setQty(0)
+        setTotal(0)
     }
 
     const [sales, setSales] = useState([])
@@ -246,7 +250,7 @@ const Sales = () => {
                         onHide={handleClose1}
                         size="sm"
                     >
-                        <div class="print-content">
+                        {/*<div class="print-content">*/}
                         <Modal.Header closeButton>
                             <Modal.Title>
                                 Sales Receipt
@@ -309,7 +313,7 @@ const Sales = () => {
                                 Thanks For Your Patronage
                             </p>
                         </Modal.Body>
-                        </div>
+                        {/*</div> */}
                     </Modal>
                     
                 </div>

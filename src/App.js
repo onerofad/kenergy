@@ -27,15 +27,15 @@ function App() {
       <Media at='mobile'>
         <BrowserRouter>
           <Routes>
-            <Route index element={<Home />} />
-            <Route path='items' element={<Items />} />
+            <Route index element={<Home mobile />} />
+            {/*<Route path='items' element={<Items />} />
             <Route path='register' element={<Register />} />
             <Route path='suppliers' element={<Suppliers />} />
             <Route path='inventory' element={<Inventory />} />
             <Route path='sales' element={<Sales />} />
             <Route path='reports' element={<Reports />} />
             <Route path='expense' element={<Expense />} />
-
+            */}
           </Routes>
         </BrowserRouter>
 

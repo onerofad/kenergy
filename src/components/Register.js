@@ -3,11 +3,12 @@ import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
 import Modal from "react-bootstrap/Modal"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Custombar from "./CustomBar"
-import { Container } from "react-bootstrap"
+import { Container, Spinner } from "react-bootstrap"
 import { Link } from "react-router"
 import { BiMessageError } from "react-icons/bi"
+import { getUsers } from "../API"
 
 const Register = ({mobile}) => {
 
@@ -15,20 +16,50 @@ const Register = ({mobile}) => {
     const [password, setpassword] = useState("")
     const [cpassword, setcpassword] = useState("")
 
+    const [users, setUsers] = useState([])
+
+    useEffect(() => {
+        getAllUsers()
+    },[])
+
+    const getAllUsers = () => {
+        getUsers().get("/").then(res => setUsers(res.data))
+        .catch(error => console.log("An error has occurred", error))
+    }
+
     const [modalText, setmodalText] = useState("")
 
     const [show, setShow] = useState(false)
 
+    const [loading, setLoading] = useState("")
+
     const handleClose = () => setShow(false)
 
     const register = () => {
+        
+        const user = users.filter(u => u.username === username)[0]
+        
         if(username == "" || password == "" || cpassword == ""){
             setmodalText("Please enter all Fields")
             setShow(true)
         }else if(password !== cpassword){
             setmodalText("Passwords do not match")
             setShow(true)
+        }else if(user){
+            setmodalText("username Already Exist")
+            setShow(true) 
         }else{
+            setLoading("border")
+            let accesslevel = 1
+            let items = {username, password, accesslevel}
+            getUsers().post("/", items).then(() => {
+                setLoading("")
+                setmodalText("Register Successfull")
+                setShow(true)
+                setusername("")
+                setpassword("")
+                setcpassword("")
+            })
             
         }
     }
@@ -58,7 +89,12 @@ const Register = ({mobile}) => {
                         type="text"
                         value={username}
                         onChange={(e) => setusername(e.target.value)}
-                    />
+                        style={{
+                            backgroundColor: 'ButtonFace',
+                            height: 50,
+                            borderRadius: 10
+                        }}
+                   />
                 </Form.Group>
             </Row>
             <Row className="mb-3 justify-content-center">
@@ -69,7 +105,11 @@ const Register = ({mobile}) => {
                         type="password"
                         value={password}
                         onChange={(e) => setpassword(e.target.value)}
-                
+                        style={{
+                            backgroundColor: 'ButtonFace',
+                            height: 50,
+                            borderRadius: 10
+                        }}
                     />
                 </Form.Group>
             </Row>
@@ -81,13 +121,22 @@ const Register = ({mobile}) => {
                         type="password"
                         value={cpassword}
                         onChange={(e) => setcpassword(e.target.value)}
-                
+                        style={{
+                            backgroundColor: 'ButtonFace',
+                            height: 50,
+                            borderRadius: 10
+                        }}
                     />
                 </Form.Group>
             </Row>
             <Row className="justify-content-center"> 
                 <Form.Group as={Col} md={5}>
                     <Button onClick={register}>
+                        <Spinner
+                            size="sm"
+                            as="span"
+                            animation={loading}
+                        />
                         Register
                     </Button>
                     &nbsp;
@@ -102,11 +151,9 @@ const Register = ({mobile}) => {
         </div>
         <Modal size="sm" onHide={handleClose} show={show}>
             <Modal.Header closeButton>
-                <Modal.Title>Error Message</Modal.Title>
+                <Modal.Title>Message</Modal.Title>
             </Modal.Header>
             <Modal.Body style={{alignContent: 'center'}}>
-                <BiMessageError size={40} color="red" />
-                &nbsp;
                 {modalText}
 
             </Modal.Body>

@@ -72,7 +72,7 @@ const Reports = () => {
                         </Nav.Link>
                     </Nav.Item>
                 </Nav>
-                <Row className="mt-4">
+                <Row className="mt-4 mb-4">
                     <Col>
                     <Table striped>
                         <thead>

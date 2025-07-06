@@ -62,6 +62,11 @@ const Home = ({mobile}) => {
         }
     }
 
+    if(mobile){
+        return(
+            <h4 style={{alignItems: 'center', justifyContent: 'center'}}>No mobile view</h4>
+        )
+    }else{
     return(
         <>
         <Custombar link={'register'} link_name={'Register'} />
@@ -86,7 +91,11 @@ const Home = ({mobile}) => {
                         type="text"
                         value={username}
                         onChange={(e) => setusername(e.target.value)}
-                        
+                        style={{
+                            backgroundColor: 'ButtonFace',
+                            height: 50,
+                            borderRadius: 10
+                        }}
                     />
                 </Form.Group>
             </Row>
@@ -98,6 +107,11 @@ const Home = ({mobile}) => {
                         type="password"
                         value={password}
                         onChange={(e) => setpassword(e.target.value)}
+                        style={{
+                            backgroundColor: 'ButtonFace',
+                            height: 50,
+                            borderRadius: 10
+                        }}
                     />
                 </Form.Group>
             </Row>
@@ -140,6 +154,7 @@ const Home = ({mobile}) => {
     </Container>
     </>        
     )
+}
 }
 
 export default Home

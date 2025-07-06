@@ -3,7 +3,7 @@ import axios from "axios"
      export const getUsers = () => {
         return(
             axios.create({
-                baseURL: 'http://localhost:8000/api/registerusers/',
+                baseURL: 'https://kenergydb.vercel.app/api/registerusers/',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
@@ -15,7 +15,7 @@ import axios from "axios"
      export const getItems = () => {
         return(
             axios.create({
-                baseURL: 'http://localhost:8000/api/items/',
+                baseURL: 'https://kenergydb.vercel.app/api/items/',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
@@ -27,7 +27,7 @@ import axios from "axios"
     export const getSuppliers = () => {
         return(
             axios.create({
-                baseURL: 'http://localhost:8000/api/suppliers/',
+                baseURL: 'https://kenergydb.vercel.app/api/suppliers/',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
@@ -39,7 +39,7 @@ import axios from "axios"
     export const getInventory = () => {
         return(
             axios.create({
-                baseURL: "http://localhost:8000/api/inventories/",
+                baseURL: "https://kenergydb.vercel.app/api/inventories/",
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
@@ -51,7 +51,7 @@ import axios from "axios"
     export const getSales = () => {
         return(
             axios.create({
-                baseURL: "http://localhost:8000/api/sales/",
+                baseURL: "https://kenergydb.vercel.app/api/sales/",
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
@@ -63,7 +63,7 @@ import axios from "axios"
     export const getSalesToday = () => {
         return(
             axios.create({
-                baseURL: "http://localhost:8000/api/sales_today/",
+                baseURL: "https://kenergydb.vercel.app/api/sales_today/",
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
@@ -75,7 +75,7 @@ import axios from "axios"
     export const getExpense = () => {
         return(
             axios.create({
-                baseURL: "http://localhost:8000/api/expenses/",
+                baseURL: "https://kenergydb.vercel.app/api/expenses/",
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
@@ -87,7 +87,7 @@ import axios from "axios"
     export const getExpensesToday = () => {
         return(
             axios.create({
-                baseURL: "http://localhost:8000/api/expenses_today/",
+                baseURL: "https://kenergydb.vercel.app/api/expenses_today/",
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'

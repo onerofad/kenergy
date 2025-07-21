@@ -95,6 +95,18 @@ import axios from "axios"
             })
         )
     }
+
+     export const getPrices = () => {
+        return(
+            axios.create({
+                baseURL: "https://kenergydb.vercel.app/api/prices/",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+        )
+    }
    
 
 

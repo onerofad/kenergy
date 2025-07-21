@@ -12,6 +12,7 @@ import Expense from './components/Expense';
 import ExpenseReport from './components/ExpenseReport';
 import PeriodicExpenseReport from './components/PeriodicExpenseReport';
 import PeriodicSalesReport from './components/PeriodicSalesReport';
+import PricePerKg from './components/PrixePerKg';
 
 
 const {Media, MediaContextProvider} = createMedia({
@@ -54,6 +55,7 @@ function App() {
             <Route path='expense_report' element={<ExpenseReport />} />
             <Route path='periodic_expense_report' element={<PeriodicExpenseReport />} />
             <Route path='periodic_sales_report' element={<PeriodicSalesReport />} />
+            <Route path='price' element={<PricePerKg />} />
 
           </Routes>
         </BrowserRouter>

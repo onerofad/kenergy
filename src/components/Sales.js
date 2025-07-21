@@ -3,10 +3,22 @@ import Col from "react-bootstrap/Col"
 import Custombar from "./CustomBar"
 import CustomNav from "./CustomNav"
 import { Button, Form, Modal, Spinner } from "react-bootstrap"
-import { useEffect, useState } from "react"
-import { getInventory, getItems, getSales } from "../API"
+import { useEffect, useState, useRef } from "react"
+import { getInventory, getItems, getPrices, getSales } from "../API"
+import {useReactToPrint} from 'react-to-print'
 
 const Sales = () => {
+
+    const componentRef = useRef(null);
+
+    const reactToPrintContent = () => {
+        return componentRef.current
+    }
+
+    const handlePrint = useReactToPrint({
+        documentTitle: "SuperFileName",
+        //fonts: CUSTOM_FONTS
+    });
 
     const currentDate = new Date()
 
@@ -16,12 +28,16 @@ const Sales = () => {
 
     const day = currentDate.getDate()
 
+    const [amount, setAmount] = useState(0)
+
+    const [mop, setMop] = useState("")
+
     const [inventories, setInventories] = useState([])
     const [items, setItems] = useState([])
 
     const [item, setItem] = useState("")
     const [qty, setQty] = useState(0)
-    const [price, setPrice] = useState(0)
+    //const [price, setPrice] = useState(0)
     const [total, setTotal] = useState(0)
     const [loading, setLoading] = useState("")
 
@@ -35,9 +51,16 @@ const Sales = () => {
         //printContent()
         setShow1(false)
         setItem("")
-        setPrice("")
+        //setPrice("")
+        setAmount(0)
         setQty(0)
         setTotal(0)
+    }
+
+    const [prices, setPrices] = useState([])
+
+    const getAllPrices = () => {
+        getPrices().get("/").then(response => setPrices(response.data))
     }
 
     const [sales, setSales] = useState([])
@@ -50,6 +73,7 @@ const Sales = () => {
         getAllInventories()
         getAllItems()
         getAllSales()
+        getAllPrices()
     },[])
 
     const getAllInventories = () => {
@@ -78,18 +102,22 @@ const Sales = () => {
         }else if(total === 0){
             setmodalText("Total must be greater than 0")
             setShow(true)
+        }else if(amount === 0){
+            setmodalText("Enter amount paid")
+            setShow(true)
+        }else if(mop === ""){
+            setmodalText("Select mode of payment")
+            setShow(true)
         }else{
             setLoading("border")
-            let payload = {item, qty, price, total}
+            let payload = {item, qty, price, total, amount, mop}
             getSales().post("/", payload)
             .then(() => {
                 setLoading("")
                 getAllSales()
                 setmodalText1("Sales Complete")
-                setShow1(true)
-                
+                setShow1(true) 
             })
-
         }
     }
 
@@ -103,6 +131,12 @@ const Sales = () => {
         printWindow.print();
     }
 
+    let price
+
+    prices.map(p => {
+        price = p.price
+    })
+    
     return(
         <>
         <Custombar link={'/'} link_name="Log out" />
@@ -113,7 +147,7 @@ const Sales = () => {
             <Col md={10}>
                 <div style={{paddingTop: 100}}>
                     <h4>
-                        Sales Report
+                        Make Sales
                         <span style={{float: 'right'}}>
                             {
                                 inventories.map(m => {
@@ -185,9 +219,9 @@ const Sales = () => {
                                 <Form.Label as="h6">Price Per Kg (&#8358;)</Form.Label>
                                 <Form.Control
                                     type="text"
-                                    onChange={(e) => setPrice(e.target.value)}
+                                    //onChange={(e) => setPrice(e.target.value)}
                                     value={price}
-                                    onBlur={() => setTotal(qty * price)}
+                                    //onBlur={() => setTotal(qty * price)}
                                     style={{
                                         backgroundColor: 'blue', 
                                         borderRadius: 10, 
@@ -200,11 +234,44 @@ const Sales = () => {
                                 <Form.Label as="h6">Total Amount (&#8358;)</Form.Label>
                                 <Form.Control
                                     type="text"
-                                    disabled
-                                    onChange={(e) => setTotal(e.target.value)}
+                                   // onChange={(e) => setTotal(e.target.value)}
+                                    onClick={() => setTotal(qty * price)}
                                     value={total}
                                     style={{borderRadius: 10, height: 50}}
                                 />
+                            </Form.Group>
+                        </Row>
+                         <Row className="mb-3 justify-content-center">  
+                            <Form.Group as={Col} md={4}>
+                                <Form.Label as="h6">Amount Paid (&#8358;)</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    onChange={(e) => setAmount(e.target.value)}
+                                    value={amount}
+                                    style={{
+                                        backgroundColor: 'blue', 
+                                        borderRadius: 10, 
+                                        height: 50,
+                                        color: 'white'
+                                    }}
+                                />
+                            </Form.Group>
+                            <Form.Group as={Col} md={4}>
+                                <Form.Label as="h6">Payment Mode (&#8358;)</Form.Label>
+                                <Form.Select
+                                    type="text"
+                                    onChange={(e) => setMop(e.target.value)}
+                                    value={mop}
+                                    style={{borderRadius: 10, height: 50}}
+                                >
+                                    <option value="cash">Select Payment Mode</option>
+                                    <option value="cash">Cash</option>
+                                    <option value="transfer">Transfer</option>
+                                    <option value="pos">POS</option>
+                                    <option value="card">Card</option>
+
+
+                                </Form.Select>
                             </Form.Group>
                         </Row>
                         <Row className="justify-content-center"> 
@@ -247,8 +314,13 @@ const Sales = () => {
                     </Modal>
                     <Modal
                         show={show1}
-                        onHide={handleClose1}
+                        onHide={() => {
+                            handlePrint(reactToPrintContent)
+                            setShow1(false)
+                        }
+                        }
                         size="sm"
+                        backdrop="static"
                     >
                         {/*<div class="print-content">*/}
                         <Modal.Header closeButton>
@@ -256,51 +328,53 @@ const Sales = () => {
                                 Sales Receipt
                             </Modal.Title>
                         </Modal.Header>
-                        <Modal.Body>
-                            <h5 className="text-center">
-                                KENERGY LIMITED
+                        <div >
+                        <Modal.Body ref={componentRef}>
+                            <h5 style={{fontSize: 16}} className="text-center">
+                                KNERGY LIMITED
                             </h5>
-                            <p className="text-center">
-                                11 Sapele Toad, Benin-city,
+                            <p style={{fontWeight: 400, fontSize: 12}} className="text-center">
+                                Along Ohka 1 Road, off Sapele Toad, Benin-city,
                                 Edo State, Nigeria.
                             </p>
                             <p className="text-center">
-                                +234 91 0000 0000
+                                <h6>+234 81 6514 5596</h6>
                             </p>
                             <hr/>
                             <Row className="mb-2">
                                 <Col md={6}>
                                     <h6>Item Name:</h6> 
-                                </Col>
-                                <Col md={6}>
                                     {item}
                                 </Col>
-                            </Row>
-                             <Row className="mb-2">
                                 <Col md={6}>
-                                    <h6>Qty:</h6> 
-                                </Col>
-                                <Col md={6}>
+                                    <h6>Qty:</h6>
                                     {qty} Kg
                                 </Col>
                             </Row>
-                             <Row className="mb-2">
+                            <hr/>
+                            <Row className="mb-2">
                                 <Col md={6}>
                                     <h6>Price:</h6> 
-                                </Col>
-                                <Col md={6}>
                                     &#8358; {Intl.NumberFormat().format(price,2)}
                                 </Col>
-                            </Row>
-                            <Row className="mb-2 justify-content-center">
                                 <Col md={6}>
                                     <h6>Total:</h6>
-                                </Col>
-                                <Col md={6}>
                                     &#8358; {Intl.NumberFormat().format(total,2)}
                                 </Col>
                             </Row>
-                            <Row className="mb-2 justify-content-center">
+                            <hr/>
+                            <Row className="mb-2">
+                                <Col md={6}>
+                                    <h6>Amt Paid:</h6>
+                                    &#8358; {Intl.NumberFormat().format(amount,2)}
+                                </Col>
+                                <Col md={6}>
+                                    <h6>Payment Mode:</h6>
+                                    {mop}
+                                </Col>
+                            </Row>
+                            <hr/>
+                            <Row className="mb-2 justify-content-center">      
                                 <Col md={6}>
                                     <h6>Date:</h6>
                                 </Col>
@@ -309,11 +383,20 @@ const Sales = () => {
                                 </Col>
                             </Row>
                             <hr/>
+                            <Row>
+                                <Col md={6}>
+                                    <h6>Cashier /Name:</h6>
+                                </Col>
+                                <Col md={6}>
+                                    {sessionStorage.getItem("uname")}
+                                </Col>
+                            </Row>
+                            <hr/>
                             <p className="text-center">
-                                Thanks For Your Patronage
+                                <h6>Thanks For Your Patronage</h6>
                             </p>
                         </Modal.Body>
-                        {/*</div> */}
+                        </div> 
                     </Modal>
                     
                 </div>

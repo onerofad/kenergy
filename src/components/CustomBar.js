@@ -15,7 +15,7 @@ const Custombar = ({link, link_name}) => {
                     width='50'
                     height='50'
                 />
-                    KENERGY
+                    KNERGY
             </Navbar.Brand>
             <Navbar.Collapse className="justify-content-end">
                 <Navbar.Text>

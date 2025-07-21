@@ -1,11 +1,21 @@
 import Nav  from "react-bootstrap/Nav"
-import { BiSolidLogOut, BiSolidUserVoice } from "react-icons/bi"
+import { BiMoney, BiSolidLogOut, BiSolidUserVoice } from "react-icons/bi"
 import { BsBasket, BsBook, BsCashCoin, BsFileExcel, BsFillSignIntersectionYFill, BsMicrosoftTeams } from "react-icons/bs"
 const CustomNav = () => {
 
     return(
         <Nav style={{height: 540, backgroundColor: '#000', paddingTop: 60, paddingLeft: 15, paddingRight: 15}} variant="underline" className="justify-content-center flex-column">
-             <Nav.Item as='h6'>
+        {
+            sessionStorage.getItem("accesslevel") == "1" ?
+            <Nav.Item as='h6'>
+                <Nav.Link className="text-white" href="/price" >
+                    <BiMoney size={24} color="#fff" />
+                        &nbsp;&nbsp;
+                        PRICE PER KG
+                </Nav.Link>
+            </Nav.Item> : ''
+        }
+            <Nav.Item as='h6'>
                 <Nav.Link className="text-white" href="items">
                     <BiSolidUserVoice size={24} color="#fff" />
                     &nbsp;&nbsp;
@@ -47,13 +57,6 @@ const CustomNav = () => {
                     REPORTS
                 </Nav.Link>
             </Nav.Item>
-            {/*<Nav.Item as='h6'>
-                <Nav.Link className="text-white" href="/" >
-                    <BiSolidLogOut size={24} color="#fff" />
-                    &nbsp;&nbsp;
-                    LOG OUT
-                </Nav.Link>
-            </Nav.Item>*/}
         </Nav>
     )
 

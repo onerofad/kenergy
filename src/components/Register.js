@@ -18,6 +18,8 @@ const Register = ({mobile}) => {
 
     const [users, setUsers] = useState([])
 
+    const [accesslevel, set_accesslevel] = useState("0")
+
     useEffect(() => {
         getAllUsers()
     },[])
@@ -42,6 +44,9 @@ const Register = ({mobile}) => {
         if(username == "" || password == "" || cpassword == ""){
             setmodalText("Please enter all Fields")
             setShow(true)
+        }else if(accesslevel == "0"){
+            setmodalText("Select access level")
+            setShow(true)
         }else if(password !== cpassword){
             setmodalText("Passwords do not match")
             setShow(true)
@@ -50,7 +55,7 @@ const Register = ({mobile}) => {
             setShow(true) 
         }else{
             setLoading("border")
-            let accesslevel = 1
+            //let accesslevel = 1
             let items = {username, password, accesslevel}
             getUsers().post("/", items).then(() => {
                 setLoading("")
@@ -73,7 +78,7 @@ const Register = ({mobile}) => {
             <Col>
                 <div style={{paddingTop: 100}}>  
                     <h4>
-                        Welcome, KENERGY LIMITED
+                        Welcome, KNERGY LIMITED
                     </h4>
                     <hr/>
                 </div>
@@ -95,6 +100,25 @@ const Register = ({mobile}) => {
                             borderRadius: 10
                         }}
                    />
+                </Form.Group>
+            </Row>
+            <Row className="mb-3 justify-content-center">
+                <Form.Group as={Col} md='5'>
+                    <Form.Label>Access Level</Form.Label>
+                    <Form.Select
+                       type="text"
+                       value={accesslevel}
+                       onChange={(e) => set_accesslevel(e.target.value)}
+                       style={{
+                            backgroundColor: 'ButtonFace',
+                            height: 50,
+                            borderRadius: 10
+                        }}
+                   >
+                    <option value="0">access level</option>
+                    <option value="1">admin</option>
+                    <option value="2">users</option>
+                   </Form.Select>
                 </Form.Group>
             </Row>
             <Row className="mb-3 justify-content-center">

@@ -52,10 +52,13 @@ const Home = ({mobile}) => {
             setmodalText("Password is Invalid")
             setShow(true)
         }else{  
+            const user = users.filter(u => u.username === username)[0]
+            let accesslevel = user.accesslevel
             setLoading('border')  
             setTimeout(() => {
                 setLoading('')
                 sessionStorage.setItem("uname", username)
+                sessionStorage.setItem("accesslevel", accesslevel)
                 router('/Inventory')
             }, 3000)
            
@@ -75,7 +78,7 @@ const Home = ({mobile}) => {
             <Col>
                 <div style={{paddingTop: 100}}>  
                     <h4>
-                        Welcome, KENERGY LIMITED
+                        Welcome, KNERGY LIMITED
                     </h4>
                     <hr/>
                 </div>

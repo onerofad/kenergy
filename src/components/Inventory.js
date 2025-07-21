@@ -10,7 +10,7 @@ import Form from "react-bootstrap/Form"
 import Modal from "react-bootstrap/Modal"
 import { useEffect, useState } from "react"
 import { BiSolidBookOpen } from "react-icons/bi"
-import { getInventory, getItems, getSuppliers, getUsers } from "../API"
+import { getInventory, getItems, getSales, getSuppliers, getUsers } from "../API"
 
 const Inventory = ({mobile}) => {
 
@@ -24,6 +24,7 @@ const Inventory = ({mobile}) => {
     const [supplier, setSupplier] = useState('')
     const [qty, setQty] = useState(0)
     const [cost, setCost] = useState(0)
+    const [selling, setSelling] = useState(0)
     const [date, setDate] = useState('')
     const [staff, setStaff] = useState('')
 
@@ -47,6 +48,7 @@ const Inventory = ({mobile}) => {
         getAllSuppliers()
         getAllItems()
         getAllUsers()
+        getAllSales()
     },[])
 
     //pagination code
@@ -61,6 +63,8 @@ const Inventory = ({mobile}) => {
 
     let no_pagination_items = Math.ceil(total_items/5)
 
+    const [sales, setSales] = useState([])
+    
     let items = []
 
     let table_items = []
@@ -86,6 +90,15 @@ const Inventory = ({mobile}) => {
             </Pagination.Item>
         )
     }
+
+    const getAllSales = () => {
+        getSales().get("/").then(response => setSales(response.data))
+        .catch(error => console.log("An error has occurred" + error))
+    }
+
+    let total_kg_sales = 0
+
+    let total_amount_sales = 0
 
     const getAllInventories = () => {
         settable_Loading("border")
@@ -129,6 +142,9 @@ const Inventory = ({mobile}) => {
         }else if(cost <= 0){
             setmodalText1('Cost must be greater than 0')
             setShow1(true)
+        }else if(selling <= 0){
+            setmodalText1('Selling Price must be greater than 0')
+            setShow1(true)
         }else if(date === ''){
             setmodalText1('Select a date')
             setShow1(true)
@@ -137,7 +153,7 @@ const Inventory = ({mobile}) => {
             setShow1(true)
         }else{
             setLoading("border")
-            const info = {item, supplier, qty, cost, date, staff}
+            const info = {item, supplier, qty, cost, selling, date, staff}
             getInventory().post("/", info).then(() => {
                 setLoading("")
                 getAllInventories()
@@ -146,6 +162,7 @@ const Inventory = ({mobile}) => {
                 setSupplier("")
                 setQty("")
                 setCost("")
+                setSelling("")
                 setDate("")
                 setStaff("")
             })
@@ -169,14 +186,21 @@ const Inventory = ({mobile}) => {
                                 inventories.map(m => 
                                      {
                                         total_kg += m.qty
-                                        total_cost += m.cost * m.qty
+                                        total_cost += m.selling * m.qty
                                      }
                                 )
                             }
+
+                            {
+                                sales.map(s => {
+                                    total_kg_sales += s.qty
+                                    total_amount_sales += s.total
+                                })
+                            }
                             Total Amount:
-                            &#8358;{Intl.NumberFormat().format(total_cost, 2)}
+                            &#8358;{Intl.NumberFormat().format(total_cost - total_amount_sales, 2)}
                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                            Total (Kg) {total_kg}
+                            Total (Kg) {total_kg - total_kg_sales}
                         </span>
                     </h4>
                     <hr/>
@@ -188,6 +212,7 @@ const Inventory = ({mobile}) => {
                                 <th>Supplier</th>
                                 <th>Quantity (Kg)</th>
                                 <th>Cost Per Kg</th>
+                                <th>Sell Price Per Kg</th>
                                 <th>Total</th>
                                 <th>Date</th>
                                 <th>Entry Staff</th>
@@ -210,7 +235,9 @@ const Inventory = ({mobile}) => {
                                     <td>{d.supplier}</td>
                                     <td>{d.qty}</td>
                                     <td>&#8358; {Intl.NumberFormat().format(d.cost,2)}</td>
-                                    <td>&#8358; {Intl.NumberFormat().format(d.cost * d.qty)}</td>
+                                    <td>&#8358; {Intl.NumberFormat().format(d.selling,2)}</td>
+
+                                    <td>&#8358; {Intl.NumberFormat().format(d.selling * d.qty)}</td>
                                     <td>{d.date}</td>
                                     <td>{d.staff}</td>
                                 </tr>
@@ -287,15 +314,6 @@ const Inventory = ({mobile}) => {
                         </Form.Group>
                     </Row>
                     <Row className="mb-3">
-                        <Form.Group as={Col} md='6'>
-                            <Form.Label>Quantity (Kg.)</Form.Label>
-                            <Form.Control
-                                required
-                                type="number"
-                                value={qty}
-                                onChange={(e) => setQty(e.target.value)}
-                            />
-                        </Form.Group>
                           <Form.Group as={Col} md='6'>
                             <Form.Label>Cost Per Kg (&#8358;)</Form.Label>
                             <Form.Control
@@ -305,9 +323,26 @@ const Inventory = ({mobile}) => {
                                 onChange={(e) => setCost(e.target.value)}
                             />
                         </Form.Group>
+                        <Form.Group as={Col} md='6'>
+                            <Form.Label>Selling Price Per Kg (&#8358;)</Form.Label>
+                            <Form.Control
+                                required
+                                type="number"
+                                value={selling}
+                                onChange={(e) => setSelling(e.target.value)}
+                            />
+                        </Form.Group>
                     </Row>
-
                     <Row className="mb-3">
+                         <Form.Group as={Col} md='6'>
+                            <Form.Label>Quantity (Kg.)</Form.Label>
+                            <Form.Control
+                                required
+                                type="number"
+                                value={qty}
+                                onChange={(e) => setQty(e.target.value)}
+                            />
+                        </Form.Group>
                         <Form.Group as={Col} md='6'>
                             <Form.Label>Date</Form.Label>
                             <Form.Control
@@ -316,7 +351,9 @@ const Inventory = ({mobile}) => {
                                 onChange={(e) => setDate(e.target.value)}
                             />
                         </Form.Group>
-                          <Form.Group as={Col} md='6'>
+                    </Row>
+                    <Row className="mb-3">
+                        <Form.Group as={Col}>
                             <Form.Label>Staff Name</Form.Label>
                             <Form.Select
                                 required

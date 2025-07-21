@@ -317,6 +317,10 @@ const Sales = () => {
                         onHide={() => {
                             handlePrint(reactToPrintContent)
                             setShow1(false)
+                            setItem("")
+                            setAmount(0)
+                            setQty(0)
+                            setTotal(0)
                         }
                         }
                         size="sm"
@@ -328,75 +332,70 @@ const Sales = () => {
                                 Sales Receipt
                             </Modal.Title>
                         </Modal.Header>
-                        <div >
-                        <Modal.Body ref={componentRef}>
-                            <h5 style={{fontSize: 16}} className="text-center">
-                                KNERGY LIMITED
-                            </h5>
-                            <p style={{fontWeight: 400, fontSize: 12}} className="text-center">
-                                Along Ohka 1 Road, off Sapele Toad, Benin-city,
-                                Edo State, Nigeria.
-                            </p>
-                            <p className="text-center">
-                                <h6>+234 81 6514 5596</h6>
-                            </p>
-                            <hr/>
-                            <Row className="mb-2">
-                                <Col md={6}>
-                                    <h6>Item Name:</h6> 
-                                    {item}
-                                </Col>
-                                <Col md={6}>
-                                    <h6>Qty:</h6>
-                                    {qty} Kg
-                                </Col>
-                            </Row>
-                            <hr/>
-                            <Row className="mb-2">
-                                <Col md={6}>
-                                    <h6>Price:</h6> 
-                                    &#8358; {Intl.NumberFormat().format(price,2)}
-                                </Col>
-                                <Col md={6}>
-                                    <h6>Total:</h6>
-                                    &#8358; {Intl.NumberFormat().format(total,2)}
-                                </Col>
-                            </Row>
-                            <hr/>
-                            <Row className="mb-2">
-                                <Col md={6}>
-                                    <h6>Amt Paid:</h6>
-                                    &#8358; {Intl.NumberFormat().format(amount,2)}
-                                </Col>
-                                <Col md={6}>
-                                    <h6>Payment Mode:</h6>
-                                    {mop}
-                                </Col>
-                            </Row>
-                            <hr/>
-                            <Row className="mb-2 justify-content-center">      
-                                <Col md={6}>
-                                    <h6>Date:</h6>
-                                </Col>
-                                <Col md={6}>
-                                    <span>{year}/{month}/{day}</span>
-                                </Col>
-                            </Row>
-                            <hr/>
-                            <Row>
-                                <Col md={6}>
-                                    <h6>Cashier /Name:</h6>
-                                </Col>
-                                <Col md={6}>
-                                    {sessionStorage.getItem("uname")}
-                                </Col>
-                            </Row>
+                        <Modal.Body>
+                            <div  ref={componentRef}>
+                                <h5 style={{fontSize: 14 , textAlign: "center"}}>
+                                     KNERGY LIMITED
+                                </h5>
+                                <p style={{fontWeight: 400, fontSize: 12, textAlign: 'center'}}>
+                                    Along Ohka 1 Road, off Sapele Toad, Benin-city,
+                                    Edo State, Nigeria.
+                                </p>
+                                <p>
+                                    <h6 style={{fontWeight: 700, fontSize: 12, textAlign: 'center'}}>+234 81 6514 5596</h6>
+                                </p>
+                                <hr/>
+                            
+                                <table style={{
+                                    width: '100%',
+                                    borderWidth: 1,
+                                    borderStyle: 'solid',
+                                    borderColor: '#000'
+
+                                }}>
+                                    <tbody>
+                                        <tr>
+                                            <td><h6>Service:</h6> </td>
+                                            <td>{item}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><h6>Qty:</h6> </td>
+                                            <td>{qty}KG</td>
+                                        </tr>
+                                        <tr>
+                                            <td><h6>Price:</h6></td> 
+                                            <td>&#8358; {Intl.NumberFormat().format(price,2)}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><h6>Total:</h6></td>
+                                            <td>&#8358; {Intl.NumberFormat().format(total,2)}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><h6>Amt Paid:</h6></td>
+                                            <td>&#8358; {Intl.NumberFormat().format(amount,2)}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><h6>Payment Mode:</h6></td>
+                                            <td>{mop}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><h6>Date:</h6></td>
+                                            <td><span>{year}/{month}/{day}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><h6>Cashier /Name:</h6></td>
+                                            <td>{sessionStorage.getItem("uname")}</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
                             <hr/>
                             <p className="text-center">
                                 <h6>Thanks For Your Patronage</h6>
                             </p>
+                        </div>
                         </Modal.Body>
-                        </div> 
+                       
                     </Modal>
                     
                 </div>

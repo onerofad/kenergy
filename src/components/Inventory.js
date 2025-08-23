@@ -174,10 +174,10 @@ const Inventory = ({mobile}) => {
         <>
         <Custombar link={'/'} link_name={'Log out'} />
         <Row style={{width: '98%'}}>
-            <Col md={2}>
+            <Col md={2} sm={2}>
                  <CustomNav />
             </Col>
-            <Col md={10}>
+            <Col md={10} sm={10}>
                 <div style={{paddingTop: 100}}>  
                     <h4>
                         Welcome, {sessionStorage.getItem("uname")}

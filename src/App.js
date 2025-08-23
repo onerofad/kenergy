@@ -28,15 +28,18 @@ function App() {
       <Media at='mobile'>
         <BrowserRouter>
           <Routes>
-            <Route index element={<Home mobile />} />
-            {/*<Route path='items' element={<Items />} />
+             <Route index element={<Home />} />
             <Route path='register' element={<Register />} />
+            <Route path='items' element={<Items />} />
             <Route path='suppliers' element={<Suppliers />} />
             <Route path='inventory' element={<Inventory />} />
             <Route path='sales' element={<Sales />} />
             <Route path='reports' element={<Reports />} />
             <Route path='expense' element={<Expense />} />
-            */}
+            <Route path='expense_report' element={<ExpenseReport />} />
+            <Route path='periodic_expense_report' element={<PeriodicExpenseReport />} />
+            <Route path='periodic_sales_report' element={<PeriodicSalesReport />} />
+            <Route path='price' element={<PricePerKg />} />
           </Routes>
         </BrowserRouter>
 

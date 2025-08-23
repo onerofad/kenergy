@@ -3,7 +3,7 @@ import axios from "axios"
      export const getUsers = () => {
         return(
             axios.create({
-                baseURL: 'https://kenergydb.vercel.app/api/registerusers/',
+                baseURL: 'https://kenergy-db.vercel.app/api/registerusers/',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'

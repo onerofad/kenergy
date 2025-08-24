@@ -2,7 +2,7 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Custombar from "./CustomBar"
 import CustomNav from "./CustomNav"
-import { Button, Container, Form, Modal, Spinner, Table } from "react-bootstrap"
+import { Button, Form, Modal, Spinner, Table } from "react-bootstrap"
 import { useEffect, useState } from "react"
 import { getItems, getPrices } from "../API"
 import { BsTrashFill } from "react-icons/bs"
@@ -82,7 +82,6 @@ const PricePerKg = () => {
             <Col md={2}> 
                 <CustomNav />
             </Col>
-            <Container>
             <Col md={4}>
                 <div style={{paddingTop: 100}}>
                     <h4>
@@ -143,7 +142,6 @@ const PricePerKg = () => {
             </Form>
         </div>
         </Col>
-        </Container>
         <Col md={6}>
             <div style={{paddingTop: 100}}>
                 <h4>

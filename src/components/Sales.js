@@ -145,7 +145,7 @@ const Sales = () => {
                 <CustomNav />
             </Col>
             <Col md={10}>
-                <div style={{paddingTop: 100}}>
+                <div style={{paddingTop: 20}}>
                     <h4>
                         Make Sales
                         <span style={{float: 'right'}}>

@@ -83,7 +83,7 @@ const PricePerKg = () => {
                 <CustomNav />
             </Col>
             <Col md={4}>
-                <div style={{paddingTop: 100}}>
+                <div style={{paddingTop: 20}}>
                     <h4>
                         Enter Price Per KG
                     </h4>

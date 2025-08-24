@@ -178,7 +178,7 @@ const Inventory = ({mobile}) => {
                  <CustomNav />
             </Col>
             <Col md={10} sm={10}>
-                <div style={{paddingTop: 100}}>  
+                <div style={{paddingTop: 20}}>  
                     <h4>
                         Welcome, {sessionStorage.getItem("uname")}
                         <span style={{float: 'right'}}>

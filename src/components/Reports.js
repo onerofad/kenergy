@@ -44,7 +44,7 @@ const Reports = () => {
                 <CustomNav />
             </Col>
             <Col md={10}>
-                <Row style={{paddingTop: 100}}>
+                <Row style={{paddingTop: 20}}>
                     <h4>
                         Reports
                     </h4>

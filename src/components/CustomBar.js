@@ -8,7 +8,7 @@ import { BiSolidRegistered } from "react-icons/bi"
 const Custombar = ({link, link_name}) => {
 
     return(
-        <Navbar style={{paddingRight:  30}} fixed="top" expand="lg" bg="primary" data-bs-theme="dark">
+        <Navbar style={{paddingRight:  30}} fixed="" expand="lg" bg="primary" data-bs-theme="dark">
             <Navbar.Brand href="home">
                 <img
                     src={img}

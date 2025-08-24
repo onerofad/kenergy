@@ -1,9 +1,16 @@
 import Nav  from "react-bootstrap/Nav"
+import Navbar  from "react-bootstrap/Navbar"
+import Container  from "react-bootstrap/Container"
+
+
 import { BiMoney, BiSolidLogOut, BiSolidUserVoice } from "react-icons/bi"
 import { BsBasket, BsBook, BsCashCoin, BsFileExcel, BsFillSignIntersectionYFill, BsMicrosoftTeams } from "react-icons/bs"
 const CustomNav = () => {
 
     return(
+        <Navbar expand="lg" className="bg-body-tertiary">
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
         <Nav style={{height: 540, backgroundColor: '#000', paddingTop: 60, paddingLeft: 15, paddingRight: 15}} variant="underline" className="justify-content-center flex-column">
         {
             sessionStorage.getItem("accesslevel") == "1" ?
@@ -58,6 +65,8 @@ const CustomNav = () => {
                 </Nav.Link>
             </Nav.Item>
         </Nav>
+        </Navbar.Collapse>
+        </Navbar>
     )
 
 }

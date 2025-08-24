@@ -2,7 +2,7 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Custombar from "./CustomBar"
 import CustomNav from "./CustomNav"
-import { Button, Form, Modal, Spinner, Table } from "react-bootstrap"
+import { Button, Container, Form, Modal, Spinner, Table } from "react-bootstrap"
 import { useEffect, useState } from "react"
 import { getItems, getPrices } from "../API"
 import { BsTrashFill } from "react-icons/bs"
@@ -78,6 +78,7 @@ const PricePerKg = () => {
     return(
         <>
         <Custombar  link={'/'} link_name={'Log out'} />
+        <Container fluid>
         <Row style={{width: '98%'}}>
             <Col md={2}> 
                 <CustomNav />
@@ -217,6 +218,7 @@ const PricePerKg = () => {
                  {modalText}
             </Modal.Body>
         </Modal>
+        </Container>
         </>
 
     )

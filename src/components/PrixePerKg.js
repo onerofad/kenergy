@@ -78,11 +78,11 @@ const PricePerKg = () => {
     return(
         <>
         <Custombar  link={'/'} link_name={'Log out'} />
-        <Container fluid>
         <Row style={{width: '98%'}}>
             <Col md={2}> 
                 <CustomNav />
             </Col>
+            <Container>
             <Col md={4}>
                 <div style={{paddingTop: 100}}>
                     <h4>
@@ -143,6 +143,7 @@ const PricePerKg = () => {
             </Form>
         </div>
         </Col>
+        </Container>
         <Col md={6}>
             <div style={{paddingTop: 100}}>
                 <h4>
@@ -218,7 +219,6 @@ const PricePerKg = () => {
                  {modalText}
             </Modal.Body>
         </Modal>
-        </Container>
         </>
 
     )

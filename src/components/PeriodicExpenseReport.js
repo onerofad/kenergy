@@ -16,7 +16,6 @@ const PeriodicExpenseReport = () => {
      const [datefrom, setdateFrom] = useState(null)
      const [dateto, setdateTo] = useState(null)
     const [search_result, setSearchResult] = useState([])
-    const [qty, setQty] = useState(0)
     const [total, setTotal] = useState(0)
     
         let id=0
@@ -53,10 +52,11 @@ const PeriodicExpenseReport = () => {
                             </tr>
                     )
                 }))
-                search_expenses.map(t => {
-                    expense_total += t.expenseamount
+                search_expenses.map(t => 
+                    {expense_total += t.expenseamount
                     setTotal(expense_total)
-                })
+                    }
+                )
                 setTableLoading("")
     }
     return(

@@ -85,7 +85,7 @@ const Inventory = ({mobile}) => {
 
     for(let number = 1; number <= no_pagination_items; number++){
         items.push(
-            <Pagination.Item onClick={() => handlePagination(number)} active={number == active}>
+            <Pagination.Item onClick={() => handlePagination(number)} active={number === active}>
                 {number}
             </Pagination.Item>
         )
@@ -183,19 +183,17 @@ const Inventory = ({mobile}) => {
                         Welcome, {sessionStorage.getItem("uname")}
                         <span style={{float: 'right'}}>
                             {
-                                inventories.map(m => 
-                                     {
-                                        total_kg += m.qty
-                                        total_cost += m.selling * m.qty
-                                     }
+                                inventories.map((m) => 
+                                    {total_kg += m.qty;
+                                    total_cost += m.selling * m.qty }
                                 )
                             }
 
                             {
-                                sales.map(s => {
-                                    total_kg_sales += s.qty
-                                    total_amount_sales += s.total
-                                })
+                                sales.map(s => 
+                                    {total_kg_sales += s.qty;
+                                    total_amount_sales += s.total}
+                                )
                             }
                             Total Amount:
                             &#8358;{Intl.NumberFormat().format(total_cost - total_amount_sales, 2)}

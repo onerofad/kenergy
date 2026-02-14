@@ -4,7 +4,7 @@ import Custombar from "./CustomBar"
 import CustomNav from "./CustomNav"
 import { Button, Container, Form, Modal, Spinner, Table } from "react-bootstrap"
 import { useEffect, useState } from "react"
-import { getItems, getPrices } from "../API"
+import {getPrices } from "../API"
 import { BsTrashFill } from "react-icons/bs"
 
 const PricePerKg = () => {
@@ -28,8 +28,8 @@ const PricePerKg = () => {
 
     const getAllPrices = () => {
         setTableLoading("border")
-        getPrices().get("/").
-        then(res => {
+        getPrices().get("/")
+        .then(res => {
             setTableLoading("")
             setPrices(res.data)
         })

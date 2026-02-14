@@ -101,7 +101,7 @@ const ExpenseReport = () => {
                                         }
                                         <tr>
                                         {
-                                            expenses_today.map(e => {
+                                            expenses_today.map((e) => {
                                             expense_total += e.expenseamount  
                                             })
                                          }

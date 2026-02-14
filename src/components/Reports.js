@@ -2,11 +2,10 @@ import { Col, Nav, Row, Spinner, Table } from "react-bootstrap"
 import Custombar from "./CustomBar"
 import CustomNav from "./CustomNav"
 import { useEffect, useState } from "react"
-import { getSales, getSalesToday } from "../API"
+import { getSalesToday } from "../API"
 
 const Reports = () => {
 
-    const [sales, setSales] = useState([])
     const [salesToday, setSalesToday] = useState([])
 
     const [table_loading, setTableLoading] = useState("")
@@ -15,16 +14,16 @@ const Reports = () => {
     let sales_today_qty = 0
 
     useEffect(() => {
-        getAllSales()
+       // getAllSales()
         getAllSalesToday()
     },[])
 
     let id = 0
 
-    const getAllSales = () => {
+    /*const getAllSales = () => {
         getSales().get("/").then(response => setSales(response.data))
         .catch(error => console.log("An error has occurred" + error))
-    }
+    }*/
 
      const getAllSalesToday = () => {
         setTableLoading("border")
@@ -114,12 +113,12 @@ const Reports = () => {
                                 {
                                     salesToday.map(m => {
                                         sales_today_total += m.total  
-                                    }                                   )
+                                    })
                                 }
                                 {
                                     salesToday.map(m => {
                                         sales_today_qty += m.qty
-                                    }                                   )
+                                    })
                                 }
                                 <td></td>
                                 <td></td>

@@ -29,6 +29,11 @@ const ExpenseReport = () => {
             setExpenses(response.data)
         })
     }
+
+    expenses_today.map((e) => (
+      expense_total += e.expenseamount
+    ))
+
     return(
         <>
          <Custombar link="/" link_name="Log out" />
@@ -99,13 +104,7 @@ const ExpenseReport = () => {
                                                 </tr>
                                             ))
                                         }
-                                        <tr>
-                                        {
-                                            expenses_today.map((e) => {
-                                            expense_total += e.expenseamount  
-                                            })
-                                         }
-                                        
+                                        <tr>                                    
                                             <td></td>
                                             <td></td>
                                             <td><h4>Total: &#8358; {Intl.NumberFormat().format(expense_total, 2)}</h4></td>

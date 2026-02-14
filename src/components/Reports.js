@@ -35,6 +35,15 @@ const Reports = () => {
         .catch(error => console.log("An error has occurred" + error))
     }
 
+    salesToday.map(m => (
+        sales_today_total += m.total  
+    ))
+    
+    salesToday.map(m => (
+        sales_today_qty += m.qty
+    ))
+
+
     return(
         <>
         <Custombar link="/" link_name="Log out" />
@@ -110,16 +119,7 @@ const Reports = () => {
                                 ))
                             }
                             <tr>
-                                {
-                                    salesToday.map(m => {
-                                        sales_today_total += m.total  
-                                    })
-                                }
-                                {
-                                    salesToday.map(m => {
-                                        sales_today_qty += m.qty
-                                    })
-                                }
+                                
                                 <td></td>
                                 <td></td>
                                 <td><h4>Total: {sales_today_qty} Kg</h4></td>

@@ -71,6 +71,16 @@ const Inventory = ({mobile}) => {
 
     table_items = inventories.slice(start, end)
 
+    inventories.map((m) => (
+        (total_kg += m.qty)
+        (total_cost += m.selling * m.qty )
+    ))
+    
+    sales.map(s => (
+        (total_kg_sales += s.qty)
+        (total_amount_sales += s.total)
+    ))
+
     const handlePagination = (number) => {
         let endValue = number * 5
         let startValue = endValue - 5
@@ -182,19 +192,6 @@ const Inventory = ({mobile}) => {
                     <h4>
                         Welcome, {sessionStorage.getItem("uname")}
                         <span style={{float: 'right'}}>
-                            {
-                                inventories.map((m) => 
-                                    {total_kg += m.qty;
-                                    total_cost += m.selling * m.qty }
-                                )
-                            }
-
-                            {
-                                sales.map(s => 
-                                    {total_kg_sales += s.qty;
-                                    total_amount_sales += s.total}
-                                )
-                            }
                             Total Amount:
                             &#8358;{Intl.NumberFormat().format(total_cost - total_amount_sales, 2)}
                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;

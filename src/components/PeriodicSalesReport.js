@@ -52,12 +52,12 @@ const PeriodicSalesReport = () => {
                     )
                 }))
                 search_sales.map(t => 
-                    {
-                        sales_total += t.total
-                        setTotal(sales_total)
-                        sales_qty += t.qty
-                        setQty(sales_qty)
-                    }
+                (
+                    (sales_total += t.total)
+                    (setTotal(sales_total))
+                    (sales_qty += t.qty)
+                    (setQty(sales_qty))
+                )
                 )
                 setTableLoading("")
     }
